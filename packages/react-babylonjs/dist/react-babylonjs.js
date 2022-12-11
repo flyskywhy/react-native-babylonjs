@@ -23531,6 +23531,7 @@ var ReactBabylonjsEngine = function (props, context) {
     var onBeforeRenderLoopObservable = useRef(new Observable());
     var onEndRenderLoopObservable = useRef(new Observable());
     var canvasRef = useRef(null);
+    var _b = useState(false), canvasReady = _b[0], setCanvasReady = _b[1];
     var shouldRenderRef = useRef(true);
     // const renderOptions: RenderOptions = props.renderOptions ?? {};
     var isPaused = props.isPaused, touchActionNone = props.touchActionNone, canvasId = props.canvasId, engineOptions = props.engineOptions, antialias = props.antialias, adaptToDeviceRatio = props.adaptToDeviceRatio, renderOptions = props.renderOptions; props.observeCanvasResize; props.children; var style = props.style, canvasProps = __rest(props, ["isPaused", "touchActionNone", "canvasId", "engineOptions", "antialias", "adaptToDeviceRatio", "renderOptions", "observeCanvasResize", "children", "style"]);
@@ -23540,6 +23541,9 @@ var ReactBabylonjsEngine = function (props, context) {
         shouldRenderRef.current = !isPaused;
     }, [isPaused]);
     useEffect(function () {
+        if (!canvasReady) {
+            return;
+        }
         if (canvasRef.current === null) {
             return;
         }
@@ -23588,7 +23592,7 @@ var ReactBabylonjsEngine = function (props, context) {
                 engine.current = null;
             }
         };
-    }, [canvasRef]);
+    }, [canvasReady]);
     var opts = {};
     if (touchActionNone !== false) {
         opts['touch-action'] = 'none';
@@ -23599,7 +23603,7 @@ var ReactBabylonjsEngine = function (props, context) {
     }
     // TODO: this.props.portalCanvas does not need to render a canvas.
     return (React.createElement(EngineCanvasContext.Provider, { value: { engine: engine.current, canvas: canvasRef.current } },
-        React.createElement("canvas", __assign({}, opts, canvasProps, { ref: canvasRef, style: __assign({ width: '100%', height: '100%' }, style) }), engine.current !== null && props.children)));
+        React.createElement("canvas", __assign({}, opts, canvasProps, { ref: function (view) { canvasRef.current = view; setCanvasReady(true); }, style: __assign({ width: '100%', height: '100%' }, style) }), engine.current !== null && props.children)));
 };
 
 /**
