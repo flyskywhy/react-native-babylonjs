@@ -6,6 +6,5 @@ coverage
 .idea
 compiled
 .awcache
-dist
 *.lock
 debug
