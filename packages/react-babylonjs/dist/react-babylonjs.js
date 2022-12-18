@@ -1,3 +1,7 @@
+import {Dimensions, Platform} from 'react-native';
+import 'react-native-match-media-polyfill';
+import {GCanvasView} from '@flyskywhy/react-native-gcanvas';
+
 import { Camera as Camera$1 } from '@babylonjs/core/Cameras/camera.js';
 import { Ray } from '@babylonjs/core/Culling/ray.js';
 import { Frustum } from '@babylonjs/core/Maths/math.frustum.js';
@@ -23532,6 +23536,7 @@ var ReactBabylonjsEngine = function (props, context) {
     var onEndRenderLoopObservable = useRef(new Observable());
     var canvasRef = useRef(null);
     var _b = useState(false), canvasReady = _b[0], setCanvasReady = _b[1];
+    var [hasOffscreenCanvas, setHasOffscreenCanvas] = useState(false);
     var shouldRenderRef = useRef(true);
     // const renderOptions: RenderOptions = props.renderOptions ?? {};
     var isPaused = props.isPaused, touchActionNone = props.touchActionNone, canvasId = props.canvasId, engineOptions = props.engineOptions, antialias = props.antialias, adaptToDeviceRatio = props.adaptToDeviceRatio, renderOptions = props.renderOptions; props.observeCanvasResize; props.children; var style = props.style, canvasProps = __rest(props, ["isPaused", "touchActionNone", "canvasId", "engineOptions", "antialias", "adaptToDeviceRatio", "renderOptions", "observeCanvasResize", "children", "style"]);
@@ -23602,8 +23607,64 @@ var ReactBabylonjsEngine = function (props, context) {
         opts.id = canvasId;
     }
     // TODO: this.props.portalCanvas does not need to render a canvas.
-    return (React.createElement(EngineCanvasContext.Provider, { value: { engine: engine.current, canvas: canvasRef.current } },
-        React.createElement("canvas", __assign({}, opts, canvasProps, { ref: function (view) { canvasRef.current = view; setCanvasReady(true); }, style: __assign({ width: '100%', height: '100%' }, style) }), engine.current !== null && props.children)));
+    // return (React.createElement(EngineCanvasContext.Provider, { value: { engine: engine.current, canvas: canvasRef.current } },
+    //     React.createElement("canvas", __assign({}, opts, canvasProps, { ref: function (view) { canvasRef.current = view; setCanvasReady(true); }, style: __assign({ width: '100%', height: '100%' }, style) }), engine.current !== null && props.children)));
+    return (
+        <EngineCanvasContext.Provider value={{ engine: engine.current, canvas: canvasRef.current }}>
+            {Platform.OS === 'web' ? (
+                <canvas
+                    {...opts}
+                    {...canvasProps}
+                    ref={(view) => {
+                        canvasRef.current = view;
+                        setCanvasReady(true);
+                    }}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        ...style,
+                    }}
+                >
+                    {engine.current !== null && props.children}
+                </canvas>
+            ) : (
+                <>
+                    <GCanvasView
+                        style={{
+                            width: Dimensions.get('window').width * 2, //  need * 2 to display UI text fStop:3.00 in https://github.com/flyskywhy/GCanvasRNExamples/src/nonDeclarative.js
+                            height: Dimensions.get('window').height * 2,
+                            position: 'absolute',
+                            left: Dimensions.get('window').width,
+                            top: 0,
+                            zIndex: -100,
+                        }}
+                        onCanvasCreate={(canvas) => {
+                            global.createCanvasElements.push(canvas);
+                            setHasOffscreenCanvas(true);
+                        }}
+                        isGestureResponsible={false}
+                    />
+                    {hasOffscreenCanvas && (
+                        <GCanvasView
+                            onCanvasCreate={(view) => {
+                                canvasRef.current = view;
+                                setCanvasReady(true);
+                            }}
+                            isAutoClearRectBeforePutImageData={true}
+                            devicePixelRatio={1}
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                ...style,
+                            }}
+                        >
+                            {engine.current !== null && props.children}
+                        </GCanvasView>
+                    )}
+                </>
+            )}
+      </EngineCanvasContext.Provider>
+    )
 };
 
 /**
