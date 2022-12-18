@@ -1,3 +1,50 @@
+# react-native-babylonjs
+
+[![npm version](http://img.shields.io/npm/v/react-native-babylonjs.svg?style=flat-square)](https://npmjs.org/package/react-native-babylonjs "View this project on npm")
+[![npm downloads](http://img.shields.io/npm/dm/react-native-babylonjs.svg?style=flat-square)](https://npmjs.org/package/react-native-babylonjs "View this project on npm")
+[![npm licence](http://img.shields.io/npm/l/react-native-babylonjs.svg?style=flat-square)](https://npmjs.org/package/react-native-babylonjs "View this project on npm")
+[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android%20%7C%20web-989898.svg?style=flat-square)](https://npmjs.org/package/react-native-babylonjs "View this project on npm")
+
+There are 3 ways to use babylonjs with react-native
+
+1. Official [@babylonjs/react-native](https://github.com/BabylonJS/BabylonReactNative)
+2. `react-babylonjs` + `@babylonjs/react-native` as described in <https://github.com/brianzinn/react-babylonjs#react-native>
+3. `react-native-babylonjs` + `@flyskywhy/react-native-gcanvas`
+
+## Install react-native-babylonjs
+
+    npm install react-native-babylonjs @flyskywhy/react-native-gcanvas @babylonjs/core @babylonjs/gui
+
+If your textures are stored in APP not on Web, you should also `npm install react-native-fs react-native-unimodules@0.12.0` and write codes ref to this commit [react -> react-native: `babylonjs Non-Declarative` works well on Android with new version @flyskywhy/react-native-gcanvas support 3d game engine babylonjs](https://github.com/flyskywhy/GCanvasRNExamples/commit/686eb9f).
+
+## Use react-native-babylonjs
+Ref to `react-babylonjs` described below and babylonjs examples in <https://github.com/flyskywhy/GCanvasRNExamples>.
+
+## Feature of react-native-babylonjs
+Not support [Post Processes](https://doc.babylonjs.com/features/featuresDeepDive/postProcesses) yet.
+
+### Memo when debug Post Processes
+On Android, if uncomment `pipeline.depthOfFieldEnabled = true;` in `/src/nonDeclarative.js` ，will got black screen (and got glGetError()=GL_INVALID_FRAMEBUFFER_OPERATION after glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0)), then if put `if(postProcess.name === 'circleOfConfusion')` before `this._postProcesses.push(postProcess);` in `@babylonjs v5.1.0/core/Cameras/camera.js`, will got pink screen. This maybe bug of`@babylonjs v5.1.0` ref to `https://developer.vuforia.com/forum/unity/black-screen-android-8010`, or maybe Mali GPU ref to `https://stackoverflow.com/questions/46483852/gl-invalid-framebuffer-operation-framebuffer-is-not-complete-or-incompatible-wi`, or maybe WebGL/OpenGLES version ref to `https://forum.unity.com/threads/webgl-on-android-only-works-in-fullscreen.914435/`, or maybe `gl.getExtension("OES_texture_float")` is false so that `ThinEngine.prototype._canRenderToFramebuffer` is false, or maybe FrameBuffer size should be power of 2 (I tried to set GCanvasView to `256x256` and change `this._gl.drawingBufferWidth` to `this._gl.canvas.width` in `@babylonjs v5.1.0/core/Engines/thinEngine.js` so that `width, height` in `ThinEngine.prototype._setupFramebufferDepthAttachments` will be `256, 256` but no effect, and needPOTTextures in `@babylonjs v5.1.0/core/Engines/thinEngine.js` should be true, and if not change `this._gl.drawingBufferWidth` to `this._gl.canvas.width` will GL_INVALID_FRAMEBUFFER_OPERATION after glDrawElements), or cause by WebGL can `GL_DEPTH_STENCIL` but OpenGL ES will getError so use `GL_DEPTH24_STENCIL8` instead by `renderbufferStorage()` in https://github.com/flyskywhy/react-native-gcanvas/blob/master/packages/gcanvas/src/context/webgl/RenderingContext.js , or since https://blenderartists.org/t/purple-material-texture-is-driving-me-nuts/1371196/9 and https://stackoverflow.com/questions/72931171/in-unity-custom-shader-materials-appear-pink said pink generally means the material (or corresponding shader) has problem, maybe need test glFramebufferTexture2D in `@flyskywhy/react-native-gcanvas`, I have no clue, so just not use post processes.
+
+## Memo when debug babylonjs
+
+`if (!reflectionTexture.isReadyOrNotBlocking())` in `@babylonjs v5.1.0/core/Materials/PBR/pbrBaseMaterial.js` means whether `url` in `CubeTexture.CreateFromPrefilteredData()` is downloaded.
+
+`_useFinalCode()` in `@babylonjs v5.1.0/core/Materials/effect.js` shows the shaders name that babylonjs used.
+
+`_this._hdr` in `@babylonjs v5.1.0/core/PostProcesses/RenderPipeline/Pipelines/defaultRenderingPipeline.js`, on Web is true, on Android is false, thus cause there is no 'imageProcessing' when enable some Post Process on Android ref to `DefaultRenderingPipeline.prototype._buildPipeline`.
+
+`PostProcessManager.prototype._prepareFrame` and `PostProcessManager.prototype._finalizeFrame` in `@babylonjs v5.1.0/core/PostProcesses/postProcessManager.js` are called by `Scene.prototype._renderForCamera` in `@babylonjs v5.1.0/core/scene.js` to process camera as targetTexture?
+
+---
+
+---
+
+Forked from [react-babylonjs](https://github.com/brianzinn/react-babylonjs), below is its README.
+
+---
+
+---
 # react-babylonjs
 
 > _'react-babylonjs'_ integrates the Babylon.js real time 3D engine with React

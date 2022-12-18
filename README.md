@@ -1,3 +1,21 @@
+# react-native-babylonjs
+
+[![npm version](http://img.shields.io/npm/v/react-native-babylonjs.svg?style=flat-square)](https://npmjs.org/package/react-native-babylonjs "View this project on npm")
+[![npm downloads](http://img.shields.io/npm/dm/react-native-babylonjs.svg?style=flat-square)](https://npmjs.org/package/react-native-babylonjs "View this project on npm")
+[![npm licence](http://img.shields.io/npm/l/react-native-babylonjs.svg?style=flat-square)](https://npmjs.org/package/react-native-babylonjs "View this project on npm")
+[![Platform](https://img.shields.io/badge/platform-ios%20%7C%20android%20%7C%20web-989898.svg?style=flat-square)](https://npmjs.org/package/react-native-babylonjs "View this project on npm")
+
+Please read the [packages/react-babylonjs/README.md](packages/react-babylonjs/README.md).
+
+---
+
+---
+
+Forked from [react-babylonjs](https://github.com/brianzinn/react-babylonjs), below is its README.
+
+---
+
+---
 # react-babylonjs
 
 > _'react-babylonjs'_ integrates the Babylon.js real time 3D engine with React
