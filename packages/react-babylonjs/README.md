@@ -7,9 +7,17 @@
 
 There are 3 ways to use babylonjs with react-native
 
-1. Official [@babylonjs/react-native](https://github.com/BabylonJS/BabylonReactNative)
+1. Official [@babylonjs/react-native](https://www.npmjs.com/package/@babylonjs/react-native)
 2. `react-babylonjs` + `@babylonjs/react-native` as described in <https://github.com/brianzinn/react-babylonjs#react-native>
 3. `react-native-babylonjs` + `@flyskywhy/react-native-gcanvas`
+
+Performance: `@babylonjs/react-native` with JSI should be better.
+
+MultiView: `react-native-babylonjs` can open many `View`, while [@babylonjs/react-native](https://www.npmjs.com/package/@babylonjs/react-native) said `only one EngineView can be active`.
+
+Convenient: With `react-native-babylonjs`, the [react-babylonjs](https://github.com/brianzinn/react-babylonjs) demo [Drag 'n' Drop](https://brianzinn.github.io/create-react-app-babylonjs/dragNdrop) just ported a few codes to [react -> react-native](https://github.com/flyskywhy/GCanvasRNExamples/commit/c7ba86b), here is the result.
+
+<img src="https://raw.githubusercontent.com/flyskywhy/GCanvasRNExamples/master/assets/BabylonjsDragNDrop.gif" width="480">
 
 ## Install react-native-babylonjs
 
