@@ -23638,6 +23638,7 @@ var ReactBabylonjsEngine = function (props, context) {
                             top: 0,
                             zIndex: -100,
                         }}
+                        // offscreenCanvas={true} // TODO: use it instead of global.createCanvasElements.push(canvas) in next major version
                         onCanvasCreate={(canvas) => {
                             global.createCanvasElements.push(canvas);
                             setHasOffscreenCanvas(true);

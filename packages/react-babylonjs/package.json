@@ -7,6 +7,7 @@
     "3d",
     "babylon",
     "babylon.js",
+    "multiple-touches",
     "react",
     "react-native",
     "react-native-gcanvas",
@@ -90,7 +91,7 @@
   "peerDependencies": {
     "@babylonjs/core": "5.x",
     "@babylonjs/gui": "5.x",
-    "@flyskywhy/react-native-gcanvas": ">=5",
+    "@flyskywhy/react-native-gcanvas": ">=5.1",
     "react": ">=17",
     "react-dom": ">=17"
   },
