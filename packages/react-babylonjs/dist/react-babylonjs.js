@@ -23651,6 +23651,7 @@ var ReactBabylonjsEngine = function (props, context) {
                                 canvasRef.current = view;
                                 setCanvasReady(true);
                             }}
+                            isGestureResponsible={!touchActionNone}
                             isAutoClearRectBeforePutImageData={true}
                             devicePixelRatio={1}
                             style={{

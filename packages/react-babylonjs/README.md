@@ -28,6 +28,8 @@ If your textures are stored in APP not on Web, you should also `npm install reac
 ## Use react-native-babylonjs
 Ref to `react-babylonjs` described below and babylonjs examples in <https://github.com/flyskywhy/GCanvasRNExamples>.
 
+`react-native-babylonjs` is touchable by default, If don't want it be touchable, need set props `touchActionNone={true}` e.g. `<Engine touchActionNone={true} />`.
+
 ## Feature of react-native-babylonjs
 Not support [Post Processes](https://doc.babylonjs.com/features/featuresDeepDive/postProcesses) yet.
 
