@@ -1,6 +1,6 @@
 {
   "name": "react-native-babylonjs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "React Native for Babylon.js",
   "homepage": "https://github.com/flyskywhy/react-native-babylonjs/",
   "keywords": [
@@ -91,7 +91,7 @@
   "peerDependencies": {
     "@babylonjs/core": "5.x",
     "@babylonjs/gui": "5.x",
-    "@flyskywhy/react-native-gcanvas": ">=5.1",
+    "@flyskywhy/react-native-gcanvas": ">=6.0.3",
     "react": ">=17",
     "react-dom": ">=17"
   },
