@@ -30,6 +30,44 @@ Ref to `react-babylonjs` described below and babylonjs examples in <https://gith
 
 `react-native-babylonjs` is touchable by default, If don't want it be touchable, need set props `touchActionNone={true}` e.g. `<Engine touchActionNone={true} />`.
 
+`react-native-babylonjs` support `.glb` not `.gltf`.
+```
+import dataUri from 'data-uri.macro';
+import {SceneLoader} from '@babylonjs/core';
+import '@babylonjs/loaders/glTF';
+const christmasTreeFile = dataUri('../images/LightTree/christmas-tree.glb');
+
+  onSceneMount = async (e) => {
+    const {canvas, scene} = e;
+    ...
+    SceneLoader.ImportMeshAsync(
+      '',
+
+      // 'https://raw.githubusercontent.com/orbitgw/Chirstmas-Tree/master/src/model/',
+      // 'christmas-tree.glb',
+// use above or below
+      '',
+      christmasTreeFile,
+
+      scene,
+    ).then((result) => {
+      const christmasTree = result.meshes[1];
+      christmasTree.position.set(0, 250, 0);
+      christmasTree.scalingDeterminant = 25;
+
+      const standardMaterial = new StandardMaterial('redMat', scene);
+      standardMaterial.diffuseColor = new Color4(0.4, 0.4, 0.4, 1);
+      standardMaterial.specularColor = new Color4(0.4, 0.4, 0.4, 1);
+      standardMaterial.emissiveColor = new Color4(0.0, 0.16, 0.0, 1);
+
+      christmasTree.material = standardMaterial;
+    });
+  };
+```
+and need below hack to avoid  `Cannot create URL for blob`
+```
+sed -i -e "s/this.skipMaterials = false/this.skipMaterials = true/" node_modules/@babylonjs/loaders/glTF/glTFFileLoader.js
+```
 ## Feature of react-native-babylonjs
 Not support [Post Processes](https://doc.babylonjs.com/features/featuresDeepDive/postProcesses) yet.
 
