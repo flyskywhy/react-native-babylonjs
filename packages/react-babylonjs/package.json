@@ -91,7 +91,7 @@
   "peerDependencies": {
     "@babylonjs/core": "5.x",
     "@babylonjs/gui": "5.x",
-    "@flyskywhy/react-native-gcanvas": ">=6.0.3",
+    "@flyskywhy/react-native-gcanvas": ">=6.0.5",
     "react": ">=17",
     "react-dom": ">=17"
   },

@@ -23651,8 +23651,18 @@ var ReactBabylonjsEngine = function (props, context) {
                                 canvasRef.current = view;
                                 setCanvasReady(true);
                             }}
+                            onCanvasResize={({width, height, canvas}) => {
+                                canvas.width = width;
+                                canvas.height = height;
+
+                                // seems will resize() automatically somewhere, so comment below
+                                // if (engine.current) {
+                                //     engine.current.resize();
+                                // }
+                            }}
                             isGestureResponsible={!touchActionNone}
                             isAutoClearRectBeforePutImageData={true}
+                            isResetGlViewportAfterSetWidthOrHeight={false}
                             devicePixelRatio={1}
                             style={{
                                 width: '100%',
